@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "qyMLWliVupJQjZgVqnPMYMiDUWPHjtdbuFN6TZckNBU=",
-  "Source": "webapi_event+_tarde",
-  "BasePath": "_content/webapi_event+_tarde",
+  "Hash": "TwjcpswYlH8hSfO77Cdy+/N2ZDr+DpwpPo4FOlbHOS8=",
+  "Source": "webapi_healthclinic_tarde",
+  "BasePath": "_content/webapi_healthclinic_tarde",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

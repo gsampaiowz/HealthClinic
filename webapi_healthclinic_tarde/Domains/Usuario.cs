@@ -1,37 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace webapi_event__tarde.Domains
-    {
-    [Table(nameof(Usuario))]
-    [Index(nameof(Email), IsUnique = true)]
-    public class Usuario
-        {
-        [Key]
-        public Guid IdUsuario { get; set; } = Guid.NewGuid();
+namespace webapi_healthclinic_tarde.Domains;
 
-        [Column(TypeName = "VARCHAR(100)")]
-        [Required(ErrorMessage = "O nome do usuário é obrigatório!")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "O nome deve ter entre 5 e 100 caracteres!")]
-        public string? Nome { get; set; }
+public partial class Usuario
+{
+    public Guid IdUsuario { get; set; }
 
-        [Column(TypeName = "VARCHAR(100)")]
-        [EmailAddress(ErrorMessage = "Digite um e-mail válido!")]
-        [Required(ErrorMessage = "O e-mail do usuário é obrigatório!")]
-        [StringLength(100, MinimumLength = 5, ErrorMessage = "O e-mail deve ter entre 5 e 100 caracteres!")]
-        public string? Email { get; set; }
+    public Guid IdTipoDeUsuario { get; set; }
 
-        [Column(TypeName = "VARCHAR(60)")]
-        [Required(ErrorMessage = "A senha do usuário é obrigatória!")]
-        [StringLength(60, MinimumLength = 6, ErrorMessage = "A senha deve ter entre 6 e 60 caracteres!")]
-        public string? Senha { get; set; }
+    public string NomeUsuario { get; set; } = null!;
 
-        //CHAVES ESTRANGEIRAS
-        [Required(ErrorMessage = "O tipo de usuário é obrigatório!")]
-        public Guid IdTipoUsuario { get; set; }
-        
-        [ForeignKey(nameof(IdTipoUsuario))]
-        public TipoUsuario? TipoUsuario { get; set; }
-        }
-    }
+    public string Email { get; set; } = null!;
+
+    public string Senha { get; set; } = null!;
+
+    public virtual TipoDeUsuario IdTipoDeUsuarioNavigation { get; set; } = null!;
+
+    public virtual Medico? Medico { get; set; }
+
+    public virtual Paciente? Paciente { get; set; }
+}
