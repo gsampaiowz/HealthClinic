@@ -11,8 +11,6 @@ public partial class Consulta
 
     public Guid IdPaciente { get; set; }
 
-    public Guid IdClinica { get; set; }
-
     public Guid IdSituacao { get; set; }
 
     public DateTime Data { get; set; }

@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using webapi.inlock.codefirst.ViewModels;
-using webapi_event__tarde.Domains;
-using webapi_event__tarde.Interfaces;
-using webapi_event__tarde.Repositories;
+using webapi_healthclinic_tarde.Domains;
+using webapi_healthclinic_tarde.Interfaces;
 
 namespace webapi_event__tarde.Controllers
     {
@@ -39,17 +39,17 @@ namespace webapi_event__tarde.Controllers
                     new Claim(ClaimTypes.Role, usuarioBuscado.TipoUsuario!.Titulo!.ToString()!)
                     };
 
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("event-chave-autenticacao-webapi-dev"));
+                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("healthclinic-chave-autenticacao-webapi-dev"));
 
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken
                     (
-                    issuer: "event.webApi",
-                    audience: "event.webApi",
+                    issuer: "healthclinic.webApi",
+                    audience: "healthclinic.webApi",
                     claims: claims,
                     expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: creds 
+                    signingCredentials: creds
                     );
 
                 return Ok(new

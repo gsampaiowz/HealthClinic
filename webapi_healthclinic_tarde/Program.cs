@@ -29,13 +29,13 @@ builder.Services.AddAuthentication(options =>
          //Define se o tempo de expiração do token será validado
          ValidateLifetime = true,
          //Forma de criptografia e ainda validação da chave de autenticação
-         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("event-chave-autenticacao-webapi-dev")),
+         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("healthclinic-chave-autenticacao-webapi-dev")),
          //Tempo de expiração do token
          ClockSkew = TimeSpan.FromMinutes(30),
          //Nome da issuer, de onde está vindo
-         ValidIssuer = "event.webApi",
+         ValidIssuer = "healthclinic.webApi",
          //Nome da audience, de onde está vindo
-         ValidAudience = "event.webApi"
+         ValidAudience = "healthclinic.webApi"
          };
  });
 
@@ -45,8 +45,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
         {
         Version = "v1",
-        Title = "API EventPlus",
-        Description = "API para Gerenciamento de Eventos",
+        Title = "API HealthClinic",
+        Description = "API para Gerenciamento de Consultas",
         Contact = new OpenApiContact
             {
             Name = "Sampaio",

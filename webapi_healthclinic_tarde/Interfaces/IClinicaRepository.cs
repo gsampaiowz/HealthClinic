@@ -7,7 +7,7 @@ namespace webapi_healthclinic_tarde.Interfaces
         List<Clinica> Listar();
         Clinica BuscarPorId(Guid id);
         void Cadastrar(Clinica novaClinica);
-        void Atualizar(Guid id, Clinica consultaAtualizada);
+        void Atualizar(Guid id, Clinica clinicaAtualizada);
         void Deletar(Guid id);
         }
     }
