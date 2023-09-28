@@ -1,11 +1,11 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using webapi.inlock.codefirst.ViewModels;
 using webapi_healthclinic_tarde.Domains;
 using webapi_healthclinic_tarde.Interfaces;
+using webapi_healthclinic_tarde.Repositories;
 
 namespace webapi_event__tarde.Controllers
     {
@@ -34,9 +34,9 @@ namespace webapi_event__tarde.Controllers
                 var claims = new[]
                     {
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email!),
-                    new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.Nome!.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.NomeUsuario!.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
-                    new Claim(ClaimTypes.Role, usuarioBuscado.TipoUsuario!.Titulo!.ToString()!)
+                    new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoDeUsuarioNavigation!.NomeTipoDeUsuario!.ToString()!)
                     };
 
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("healthclinic-chave-autenticacao-webapi-dev"));
@@ -58,9 +58,9 @@ namespace webapi_event__tarde.Controllers
                     expiration = DateTime.Now.AddMinutes(30)
                     });
                 }
-            catch (Exception)
+            catch (Exception e)
                 {
-                throw;
+                return BadRequest(e);
                 }
             }
         }

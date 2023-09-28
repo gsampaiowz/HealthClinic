@@ -6,6 +6,7 @@ namespace webapi_healthclinic_tarde.Interfaces
         {
         List<Usuario> Listar();
         Usuario BuscarPorId(Guid id);
+        Usuario BuscarPorEmailESenha(string email, string senha);
         void Cadastrar(Usuario novoUsuario);
         void Atualizar(Guid id, Usuario usuarioAtualizado);
         void Deletar(Guid id);

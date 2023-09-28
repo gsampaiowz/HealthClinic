@@ -5,7 +5,7 @@ namespace webapi_healthclinic_tarde.Domains;
 
 public partial class Usuario
 {
-    public Guid IdUsuario { get; set; }
+    public Guid IdUsuario { get; set; } = Guid.NewGuid();
 
     public Guid IdTipoDeUsuario { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Usuario
 
     public string Senha { get; set; } = null!;
 
-    public virtual TipoDeUsuario IdTipoDeUsuarioNavigation { get; set; } = null!;
+    public virtual TipoDeUsuario? IdTipoDeUsuarioNavigation { get; set; } = null!;
 
     public virtual Medico? Medico { get; set; }
 

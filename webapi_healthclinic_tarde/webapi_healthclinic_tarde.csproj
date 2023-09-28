@@ -13,7 +13,6 @@
     <Compile Remove="Controllers\PresencaEventoController.cs" />
     <Compile Remove="Controllers\TipoEventoController.cs" />
     <Compile Remove="Controllers\TipoUsuarioController.cs" />
-    <Compile Remove="Controllers\UsuarioController.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
   </ItemGroup>
 

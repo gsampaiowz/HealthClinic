@@ -9,13 +9,13 @@ namespace webapi_healthclinic_tarde.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class ClinicaController : ControllerBase
+    public class ProntuarioController : ControllerBase
         {
-        private readonly IClinicaRepository _clinicaRepository;
+        private readonly IProntuarioRepository _prontuarioRepository;
 
-        public ClinicaController()
+        public ProntuarioController()
             {
-            _clinicaRepository = new ClinicaRepository();
+            _prontuarioRepository = new ProntuarioRepository();
             }
 
         [HttpGet]
@@ -23,13 +23,13 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                return Ok(_clinicaRepository.Listar());
+                return Ok(_prontuarioRepository.Listar());
 
                 }
             catch (Exception e)
                 {
 
-                return BadRequest(e);
+                return BadRequest(e); 
                 }
             }
 
@@ -38,7 +38,7 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                return Ok(_clinicaRepository.BuscarPorId(id));
+                return Ok(_prontuarioRepository.BuscarPorId(id));
                 }
             catch (Exception e)
                 {
@@ -48,11 +48,11 @@ namespace webapi_healthclinic_tarde.Controllers
             }
 
         [HttpPost]
-        public IActionResult Post(Clinica clinica)
+        public IActionResult Post(Prontuario prontuario)
             {
             try
                 {
-                _clinicaRepository.Cadastrar(clinica);
+                _prontuarioRepository.Cadastrar(prontuario);
                 return Ok();
                 }
             catch (Exception e)
@@ -63,12 +63,12 @@ namespace webapi_healthclinic_tarde.Controllers
             }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, Clinica clinica)
+        public IActionResult Put(Guid id, Prontuario prontuario)
             {
             try
                 {
-                clinica.IdClinica = id;
-                _clinicaRepository.Atualizar(id, clinica);
+                prontuario.IdProntuario = id;
+                _prontuarioRepository.Atualizar(id, prontuario);
                 return Ok();
                 }
             catch (Exception e)
@@ -83,7 +83,7 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                _clinicaRepository.Deletar(id);
+                _prontuarioRepository.Deletar(id);
                 return Ok();
                 }
             catch (Exception e)

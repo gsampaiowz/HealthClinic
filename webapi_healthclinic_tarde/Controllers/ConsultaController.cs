@@ -9,13 +9,13 @@ namespace webapi_healthclinic_tarde.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class ClinicaController : ControllerBase
+    public class ConsultaController : ControllerBase
         {
-        private readonly IClinicaRepository _clinicaRepository;
+        private readonly IConsultaRepository _consultaRepository;
 
-        public ClinicaController()
+        public ConsultaController()
             {
-            _clinicaRepository = new ClinicaRepository();
+            _consultaRepository = new ConsultaRepository();
             }
 
         [HttpGet]
@@ -23,13 +23,13 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                return Ok(_clinicaRepository.Listar());
+                return Ok(_consultaRepository.Listar());
 
                 }
             catch (Exception e)
                 {
 
-                return BadRequest(e);
+                return BadRequest(e); 
                 }
             }
 
@@ -38,7 +38,7 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                return Ok(_clinicaRepository.BuscarPorId(id));
+                return Ok(_consultaRepository.BuscarPorId(id));
                 }
             catch (Exception e)
                 {
@@ -48,11 +48,11 @@ namespace webapi_healthclinic_tarde.Controllers
             }
 
         [HttpPost]
-        public IActionResult Post(Clinica clinica)
+        public IActionResult Post(Consulta consulta)
             {
             try
                 {
-                _clinicaRepository.Cadastrar(clinica);
+                _consultaRepository.Cadastrar(consulta);
                 return Ok();
                 }
             catch (Exception e)
@@ -63,12 +63,12 @@ namespace webapi_healthclinic_tarde.Controllers
             }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, Clinica clinica)
+        public IActionResult Put(Guid id, Consulta consulta)
             {
             try
                 {
-                clinica.IdClinica = id;
-                _clinicaRepository.Atualizar(id, clinica);
+                consulta.IdConsulta = id;
+                _consultaRepository.Atualizar(id, consulta);
                 return Ok();
                 }
             catch (Exception e)
@@ -83,7 +83,7 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                _clinicaRepository.Deletar(id);
+                _consultaRepository.Deletar(id);
                 return Ok();
                 }
             catch (Exception e)

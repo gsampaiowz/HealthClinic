@@ -9,13 +9,13 @@ namespace webapi_healthclinic_tarde.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class ClinicaController : ControllerBase
+    public class MedicoController : ControllerBase
         {
-        private readonly IClinicaRepository _clinicaRepository;
+        private readonly IMedicoRepository _medicoRepository;
 
-        public ClinicaController()
+        public MedicoController()
             {
-            _clinicaRepository = new ClinicaRepository();
+            _medicoRepository = new MedicoRepository();
             }
 
         [HttpGet]
@@ -23,13 +23,13 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                return Ok(_clinicaRepository.Listar());
+                return Ok(_medicoRepository.Listar());
 
                 }
             catch (Exception e)
                 {
 
-                return BadRequest(e);
+                return BadRequest(e); 
                 }
             }
 
@@ -38,7 +38,7 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                return Ok(_clinicaRepository.BuscarPorId(id));
+                return Ok(_medicoRepository.BuscarPorId(id));
                 }
             catch (Exception e)
                 {
@@ -48,11 +48,11 @@ namespace webapi_healthclinic_tarde.Controllers
             }
 
         [HttpPost]
-        public IActionResult Post(Clinica clinica)
+        public IActionResult Post(Medico medico)
             {
             try
                 {
-                _clinicaRepository.Cadastrar(clinica);
+                _medicoRepository.Cadastrar(medico);
                 return Ok();
                 }
             catch (Exception e)
@@ -63,12 +63,12 @@ namespace webapi_healthclinic_tarde.Controllers
             }
 
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, Clinica clinica)
+        public IActionResult Put(Guid id, Medico medico)
             {
             try
                 {
-                clinica.IdClinica = id;
-                _clinicaRepository.Atualizar(id, clinica);
+                medico.IdMedico = id;
+                _medicoRepository.Atualizar(id, medico);
                 return Ok();
                 }
             catch (Exception e)
@@ -83,7 +83,7 @@ namespace webapi_healthclinic_tarde.Controllers
             {
             try
                 {
-                _clinicaRepository.Deletar(id);
+                _medicoRepository.Deletar(id);
                 return Ok();
                 }
             catch (Exception e)

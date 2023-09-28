@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using webapi_event__tarde.Utils;
 using webapi_healthclinic_tarde.Contexts;
 using webapi_healthclinic_tarde.Domains;
 using webapi_healthclinic_tarde.Interfaces;
@@ -29,6 +30,29 @@ namespace webapi_healthclinic_tarde.Repositories
 
                 ctx.Usuario.Update(usuario);
                 ctx.SaveChanges();
+                }
+            catch (Exception)
+                {
+                throw;
+                }
+            }
+
+        public Usuario BuscarPorEmailESenha(string email, string senha)
+            {
+            try
+                {
+                Usuario usuarioBuscado = ctx.Usuario
+                    .Include(u => u.IdTipoDeUsuarioNavigation).FirstOrDefault(u => u.Email == email)!;
+
+                if (usuarioBuscado != null)
+                    {
+                    if (Criptografia.CompararHash(senha, usuarioBuscado.Senha!))
+                        {
+                        return usuarioBuscado;
+                        }
+                    return null!;
+                    }
+                return null!;
                 }
             catch (Exception)
                 {

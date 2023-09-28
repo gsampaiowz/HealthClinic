@@ -17,7 +17,5 @@ public partial class Clinica
 
     public TimeSpan HoraEncerramento { get; set; }
 
-    public virtual ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
-
     public virtual ICollection<Medico> Medicos { get; set; } = new List<Medico>();
 }
