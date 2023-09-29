@@ -25,7 +25,7 @@ namespace webapi_healthclinic_tarde.Repositories
 
                 usuario.NomeUsuario = usuarioAtualizado.NomeUsuario;
                 usuario.Email = usuarioAtualizado.Email;
-                usuario.Senha = usuarioAtualizado.Senha;
+                usuario.Senha = Criptografia.GerarHash(usuarioAtualizado.Senha);
                 usuario.IdTipoDeUsuario = usuarioAtualizado.IdTipoDeUsuario;
 
                 ctx.Usuario.Update(usuario);
@@ -64,7 +64,20 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Usuario.Include(u => u.IdTipoDeUsuarioNavigation).FirstOrDefault(c => c.IdUsuario == id)!;
+                return ctx.Usuario.Select(u => new Usuario
+                    {
+                    IdUsuario = u.IdUsuario,
+                    NomeUsuario = u.NomeUsuario,
+                    Email = u.Email,
+                    IdTipoDeUsuario = u.IdTipoDeUsuario,
+
+                    IdTipoDeUsuarioNavigation = new TipoDeUsuario
+                        {
+                        IdTipoDeUsuario = u.IdTipoDeUsuario,
+                        NomeTipoDeUsuario = u.IdTipoDeUsuarioNavigation!.NomeTipoDeUsuario
+                        }
+
+                    }).FirstOrDefault(c => c.IdUsuario == id)!;
                 }
             catch (Exception)
                 {
@@ -76,6 +89,7 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
+                novoUsuario.Senha = Criptografia.GerarHash(novoUsuario.Senha!);
                 ctx.Usuario.Add(novoUsuario);
                 ctx.SaveChanges();
                 }
@@ -102,7 +116,20 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Usuario.Include(u => u.IdTipoDeUsuarioNavigation).ToList();
+                return ctx.Usuario.Select(u => new Usuario
+                    {
+                    IdUsuario = u.IdUsuario,
+                    NomeUsuario = u.NomeUsuario,
+                    Email = u.Email,
+                    IdTipoDeUsuario = u.IdTipoDeUsuario,
+
+                    IdTipoDeUsuarioNavigation = new TipoDeUsuario
+                        {
+                        IdTipoDeUsuario = u.IdTipoDeUsuarioNavigation!.IdTipoDeUsuario,
+                        NomeTipoDeUsuario = u.IdTipoDeUsuarioNavigation!.NomeTipoDeUsuario
+                        }
+
+                    }).ToList();
                 }
             catch (Exception)
                 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi_healthclinic_tarde.Domains;
 using webapi_healthclinic_tarde.Interfaces;
@@ -18,6 +19,7 @@ namespace webapi_healthclinic_tarde.Controllers
             _comentarioRepository = new ComentarioRepository();
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
             {
@@ -33,6 +35,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
             {
@@ -46,7 +49,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 return BadRequest(e);
                 }
             }
-
+        [Authorize(Roles = "Administrador, Paciente")]
         [HttpPost]
         public IActionResult Post(Comentario comentario)
             {
@@ -62,6 +65,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize (Roles = "Administrador, Paciente")]
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, Comentario comentario)
             {
@@ -78,6 +82,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador, Paciente")]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
             {

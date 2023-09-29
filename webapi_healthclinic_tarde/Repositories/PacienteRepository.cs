@@ -41,7 +41,23 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Paciente.Include(p => p.IdUsuarioNavigation).FirstOrDefault(c => c.IdPaciente == id)!;
+                return ctx.Paciente.Select(p => new Paciente
+                    {
+                    IdPaciente = p.IdPaciente,
+                    Cpf = p.Cpf,
+                    DataNascimento = p.DataNascimento,
+                    Endereco = p.Endereco,
+                    Rg = p.Rg,
+                    Telefone = p.Telefone,
+                    Cep = p.Cep,
+                    IdUsuario = p.IdUsuario,
+
+                    IdUsuarioNavigation = new Usuario
+                        {
+                        IdUsuario = p.IdUsuarioNavigation.IdUsuario,
+                        NomeUsuario = p.IdUsuarioNavigation.NomeUsuario,
+                        }
+                    }).FirstOrDefault(c => c.IdPaciente == id)!;
                 }
             catch (Exception)
                 {
@@ -79,7 +95,51 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Paciente.Include(p => p.IdUsuarioNavigation).ToList();
+                return ctx.Paciente.Select(p => new Paciente
+                    {
+                    IdPaciente = p.IdPaciente,
+                    Cpf = p.Cpf,
+                    DataNascimento = p.DataNascimento,
+                    Endereco = p.Endereco,
+                    Rg = p.Rg,
+                    Telefone = p.Telefone,
+                    Cep = p.Cep,
+                    IdUsuario = p.IdUsuario,
+
+                    IdUsuarioNavigation = new Usuario
+                        {
+                        IdUsuario = p.IdUsuarioNavigation.IdUsuario,
+                        Email = p.IdUsuarioNavigation.Email,
+                        Senha = p.IdUsuarioNavigation.Senha,
+                        IdTipoDeUsuario = p.IdUsuarioNavigation.IdTipoDeUsuario,
+                        }
+                    }).ToList();
+                }
+            catch (Exception)
+                {
+                throw;
+                }
+            }
+
+        public List<Consulta> PacienteConsultas(Guid id)
+            {
+            try
+                {
+                return ctx.Consulta.Select(c => new Consulta
+                    {
+                    IdConsulta = c.IdConsulta,
+                    IdPaciente = c.IdPaciente,
+                    IdMedico = c.IdMedico,
+                    IdSituacao = c.IdSituacao,
+                    Data = c.Data,
+                    Horario = c.Horario,
+
+                    IdSituacaoNavigation = new Situacao
+                        {
+                        IdSituacao = c.IdSituacaoNavigation.IdSituacao,
+                        TituloSituacao = c.IdSituacaoNavigation.TituloSituacao,
+                        },
+                    }).Where(c => c.IdPaciente == id).ToList();
                 }
             catch (Exception)
                 {

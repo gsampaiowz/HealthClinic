@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi_healthclinic_tarde.Domains;
 using webapi_healthclinic_tarde.Interfaces;
@@ -18,6 +19,7 @@ namespace webapi_healthclinic_tarde.Controllers
             _clinicaRepository = new ClinicaRepository();
             }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
             {
@@ -33,6 +35,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
             {
@@ -47,6 +50,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Clinica clinica)
             {
@@ -62,6 +66,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, Clinica clinica)
             {
@@ -77,7 +82,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 return BadRequest(e);
                 }
             }
-
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
             {

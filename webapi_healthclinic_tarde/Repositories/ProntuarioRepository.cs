@@ -38,7 +38,20 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Prontuario.Include(p => p.IdConsultaNavigation).FirstOrDefault(c => c.IdProntuario == id)!;
+                return ctx.Prontuario.Select(p => new Prontuario
+                    {
+                    IdProntuario = p.IdProntuario,
+                    Descricao = p.Descricao,
+                    IdConsulta = p.IdConsulta,
+
+                    IdConsultaNavigation = new Consulta
+                        {
+                        IdConsulta = p.IdConsultaNavigation.IdConsulta,
+                        Data = p.IdConsultaNavigation!.Data,
+                        IdMedico = p.IdConsultaNavigation.IdMedico,
+                        IdPaciente = p.IdConsultaNavigation.IdPaciente,
+                        }
+                    }).FirstOrDefault(c => c.IdProntuario == id)!;
                 }
             catch (Exception)
                 {
@@ -76,7 +89,21 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Prontuario.Include(p => p.IdConsultaNavigation).ToList();
+                return ctx.Prontuario.Select(p => new Prontuario
+                    {
+                    IdProntuario = p.IdProntuario,
+                    Descricao = p.Descricao,
+                    IdConsulta = p.IdConsulta,
+
+                    IdConsultaNavigation = new Consulta
+                        {
+                        Data = p.IdConsultaNavigation!.Data,
+                        IdMedico = p.IdConsultaNavigation.IdMedico,
+                        IdPaciente = p.IdConsultaNavigation.IdPaciente,
+                        IdSituacao = p.IdConsultaNavigation.IdSituacao,
+                        Horario = p.IdConsultaNavigation.Horario,
+                        }
+                    }).ToList();
                 }
             catch (Exception)
                 {

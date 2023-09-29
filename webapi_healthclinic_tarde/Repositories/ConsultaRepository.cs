@@ -41,7 +41,21 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Consulta.Include(c => c.IdPacienteNavigation).Include(c => c.IdMedicoNavigation).Include(c => c.IdSituacaoNavigation).FirstOrDefault(c => c.IdConsulta == id)!;
+                return ctx.Consulta.Select(c => new Consulta
+                    {
+                    IdConsulta = c.IdConsulta,
+                    IdPaciente = c.IdPaciente,
+                    IdMedico = c.IdMedico,
+                    IdSituacao = c.IdSituacao,
+                    Data = c.Data,
+                    Horario = c.Horario,
+
+                    IdSituacaoNavigation = new Situacao
+                        {
+                        IdSituacao = c.IdSituacaoNavigation.IdSituacao,
+                        TituloSituacao = c.IdSituacaoNavigation.TituloSituacao,
+                        },
+                    }).FirstOrDefault(c => c.IdConsulta == id)!;
                 }
             catch (Exception)
                 {
@@ -79,13 +93,59 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Consulta.Include(c => c.IdPacienteNavigation).Include(c => c.IdMedicoNavigation).Include(c => c.IdSituacaoNavigation).ToList();
+                return ctx.Consulta.Select(c => new Consulta
+                    {
+                    IdConsulta = c.IdConsulta,
+                    IdPaciente = c.IdPaciente,
+                    IdMedico = c.IdMedico,
+                    IdSituacao = c.IdSituacao,
+                    Data = c.Data,
+                    Horario = c.Horario,
+
+                    IdSituacaoNavigation = new Situacao
+                        {
+                        IdSituacao = c.IdSituacaoNavigation.IdSituacao,
+                        TituloSituacao = c.IdSituacaoNavigation.TituloSituacao,
+                        },
+                    }).ToList();
                 }
             catch (Exception)
                 {
                 throw;
 
                 }
+            }
+
+        public Comentario ConsultaComentario(Guid id)
+            {
+            return ctx.Comentario.Select(c => new Comentario
+                {
+                IdComentario = c.IdComentario,
+                Descricao = c.Descricao,
+                IdPaciente = c.IdPaciente,
+                IdConsulta = c.IdConsulta,
+                Exibe = c.Exibe,
+
+                IdPacienteNavigation = new Paciente
+                    {
+                    IdPaciente = c.IdPacienteNavigation.IdPaciente,
+                    IdUsuarioNavigation = new Usuario
+                        {
+                        IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                        NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                        }
+                    },
+                }).FirstOrDefault(c => c.IdConsulta == id)!;
+            }
+
+        public Prontuario ConsultaProntuario(Guid id)
+            {
+            return ctx.Prontuario.Select(c => new Prontuario
+                {
+                IdProntuario = c.IdProntuario,
+                Descricao = c.Descricao,
+                IdConsulta = c.IdConsulta,
+                }).FirstOrDefault(c => c.IdConsulta == id)!;
             }
         }
     }

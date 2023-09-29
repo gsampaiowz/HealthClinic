@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi_healthclinic_tarde.Domains;
 using webapi_healthclinic_tarde.Interfaces;
@@ -18,6 +19,7 @@ namespace webapi_healthclinic_tarde.Controllers
             _consultaRepository = new ConsultaRepository();
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
             {
@@ -33,6 +35,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador, Paciente, Médico")]
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
             {

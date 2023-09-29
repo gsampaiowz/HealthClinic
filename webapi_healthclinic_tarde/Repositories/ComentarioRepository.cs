@@ -40,7 +40,24 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Comentario.Include(c => c.IdPacienteNavigation).Include(c => c.IdConsultaNavigation).FirstOrDefault(c => c.IdComentario == id)!;
+                return ctx.Comentario.Select(c => new Comentario
+                    {
+                    IdComentario = c.IdComentario,
+                    Descricao = c.Descricao,
+                    IdPaciente = c.IdPaciente,
+                    IdConsulta = c.IdConsulta,
+                    Exibe = c.Exibe,
+
+                    IdPacienteNavigation = new Paciente
+                        {
+                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
+                        IdUsuarioNavigation = new Usuario
+                            {
+                            IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                            NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                            }
+                        },
+                    }).FirstOrDefault(c => c.IdComentario == id)!;
                 }
             catch (Exception)
                 {
@@ -78,7 +95,24 @@ namespace webapi_healthclinic_tarde.Repositories
             {
             try
                 {
-                return ctx.Comentario.Include(c => c.IdPacienteNavigation).Include(c => c.IdConsultaNavigation).ToList();
+                return ctx.Comentario.Select(c => new Comentario
+                    {
+                    IdComentario = c.IdComentario,
+                    Descricao = c.Descricao,
+                    IdPaciente = c.IdPaciente,
+                    IdConsulta = c.IdConsulta,
+                    Exibe = c.Exibe,
+
+                    IdPacienteNavigation = new Paciente
+                        {
+                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
+                        IdUsuarioNavigation = new Usuario
+                            {
+                            IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                            NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                            }
+                        },
+                    }).ToList();
                 }
             catch (Exception)
                 {
