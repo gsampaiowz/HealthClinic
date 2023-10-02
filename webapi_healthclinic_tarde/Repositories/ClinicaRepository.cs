@@ -85,6 +85,33 @@ namespace webapi_healthclinic_tarde.Repositories
                 throw;
                 }
             }
+
+        //Lista todos os médicos de uma determinada clínica
+        public List<Medico> ClinicaMedicos(Guid id)
+            {
+            try
+                {
+                return ctx.Medico.Select(m => new Medico
+                    {
+                    IdMedico = m.IdMedico,
+                    IdUsuario = m.IdUsuario,
+                    IdClinica = m.IdClinica,
+                    IdEspecialidade = m.IdEspecialidade,
+                    Crm = m.Crm,
+
+                    IdUsuarioNavigation = new Usuario
+                        {
+                        IdUsuario = m.IdUsuarioNavigation.IdUsuario,
+                        NomeUsuario = m.IdUsuarioNavigation.NomeUsuario,
+                        },
+                    }).Where(m => m.IdClinica == id).ToList();
+                }
+            catch (Exception)
+                {
+
+                throw;
+                }
+            }
         }
     }
 

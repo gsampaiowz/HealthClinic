@@ -83,6 +83,7 @@ namespace webapi_healthclinic_tarde.Repositories
                 }
             }
 
+        // Lista todos os médicos de uma determinada especialidade
         public List<Medico> ListarMedicos(Guid id)
             {
             return ctx.Medico.Select(m => new Medico
@@ -102,4 +103,4 @@ namespace webapi_healthclinic_tarde.Repositories
             }
         }
     }
-    }
+

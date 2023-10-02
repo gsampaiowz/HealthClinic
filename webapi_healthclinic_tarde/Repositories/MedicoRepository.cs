@@ -113,6 +113,7 @@ namespace webapi_healthclinic_tarde.Repositories
                 }
             }
 
+        // Lista todas as consultas referentes um determinado médico
         public List<Consulta> MedicoConsultas(Guid id)
             {
             try
@@ -139,6 +140,7 @@ namespace webapi_healthclinic_tarde.Repositories
                 }
             }
 
+        // Lista todas os comentários referentes um determinado médico
         public List<Comentario> MedicoComentarios(Guid id)
             {
             try
@@ -147,20 +149,23 @@ namespace webapi_healthclinic_tarde.Repositories
                     {
                     IdComentario = c.IdComentario,
                     IdConsulta = c.IdConsulta,
-                    IdPaciente = c.IdPaciente,
                     Exibe = c.Exibe,
                     Descricao = c.Descricao,
 
-                    IdPacienteNavigation = new Paciente
+                    IdConsultaNavigation = new Consulta
                         {
-                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
+                        IdConsulta = c.IdConsultaNavigation.IdConsulta,
 
-                        IdUsuarioNavigation = new Usuario
+                        IdPacienteNavigation = new Paciente
                             {
-                            IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
-                            NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario,
-                            },
-                        },
+                            IdPaciente = c.IdConsultaNavigation.IdPacienteNavigation.IdPaciente,
+                            IdUsuarioNavigation = new Usuario
+                                {
+                                IdUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                                NomeUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                                }
+                            }
+                        }
                     }).Where(c => c.IdConsultaNavigation.IdMedicoNavigation.IdMedico == id).ToList();
                 }
             catch (Exception)

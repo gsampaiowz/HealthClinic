@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi_healthclinic_tarde.Domains;
 using webapi_healthclinic_tarde.Interfaces;
@@ -18,6 +19,7 @@ namespace webapi_healthclinic_tarde.Controllers
             _prontuarioRepository = new ProntuarioRepository();
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
             {
@@ -33,6 +35,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador, Paciente, Médico")]
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
             {
@@ -47,6 +50,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Prontuario prontuario)
             {
@@ -62,6 +66,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, Prontuario prontuario)
             {
@@ -78,6 +83,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
             {

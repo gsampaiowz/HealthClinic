@@ -23,7 +23,6 @@ namespace webapi_healthclinic_tarde.Repositories
                 Comentario comentario = BuscarPorId(id) ?? throw new Exception("Comentario não encontrada");
 
                 comentario.Descricao = comentarioAtualizado.Descricao;
-                comentario.IdPaciente = comentarioAtualizado.IdPaciente;
                 comentario.IdConsulta = comentarioAtualizado.IdConsulta;
                 comentario.Exibe = comentarioAtualizado.Exibe;
 
@@ -44,19 +43,23 @@ namespace webapi_healthclinic_tarde.Repositories
                     {
                     IdComentario = c.IdComentario,
                     Descricao = c.Descricao,
-                    IdPaciente = c.IdPaciente,
                     IdConsulta = c.IdConsulta,
                     Exibe = c.Exibe,
 
-                    IdPacienteNavigation = new Paciente
+                    IdConsultaNavigation = new Consulta
                         {
-                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
-                        IdUsuarioNavigation = new Usuario
+                        IdConsulta = c.IdConsultaNavigation.IdConsulta,
+
+                        IdPacienteNavigation = new Paciente
                             {
-                            IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
-                            NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                            IdPaciente = c.IdConsultaNavigation.IdPacienteNavigation.IdPaciente,
+                            IdUsuarioNavigation = new Usuario
+                                {
+                                IdUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                                NomeUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                                }
                             }
-                        },
+                        }
                     }).FirstOrDefault(c => c.IdComentario == id)!;
                 }
             catch (Exception)
@@ -99,19 +102,23 @@ namespace webapi_healthclinic_tarde.Repositories
                     {
                     IdComentario = c.IdComentario,
                     Descricao = c.Descricao,
-                    IdPaciente = c.IdPaciente,
                     IdConsulta = c.IdConsulta,
                     Exibe = c.Exibe,
 
-                    IdPacienteNavigation = new Paciente
+                    IdConsultaNavigation = new Consulta
                         {
-                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
-                        IdUsuarioNavigation = new Usuario
+                        IdConsulta = c.IdConsultaNavigation.IdConsulta,
+
+                        IdPacienteNavigation = new Paciente
                             {
-                            IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
-                            NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                            IdPaciente = c.IdConsultaNavigation.IdPacienteNavigation.IdPaciente,
+                            IdUsuarioNavigation = new Usuario
+                                {
+                                IdUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                                NomeUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                                }
                             }
-                        },
+                        }
                     }).ToList();
                 }
             catch (Exception)

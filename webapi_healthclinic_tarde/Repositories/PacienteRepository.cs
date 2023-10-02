@@ -121,6 +121,7 @@ namespace webapi_healthclinic_tarde.Repositories
                 }
             }
 
+        // Lista todas as consultas referentes um determinado paciente
         public List<Consulta> PacienteConsultas(Guid id)
             {
             try

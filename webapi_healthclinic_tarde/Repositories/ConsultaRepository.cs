@@ -116,36 +116,59 @@ namespace webapi_healthclinic_tarde.Repositories
                 }
             }
 
+        //Retorna o comentário de uma determinada consulta
         public Comentario ConsultaComentario(Guid id)
             {
+            try
+                {
+
             return ctx.Comentario.Select(c => new Comentario
                 {
                 IdComentario = c.IdComentario,
                 Descricao = c.Descricao,
-                IdPaciente = c.IdPaciente,
                 IdConsulta = c.IdConsulta,
                 Exibe = c.Exibe,
 
-                IdPacienteNavigation = new Paciente
+                IdConsultaNavigation = new Consulta
                     {
-                    IdPaciente = c.IdPacienteNavigation.IdPaciente,
-                    IdUsuarioNavigation = new Usuario
+                    IdConsulta = c.IdConsultaNavigation.IdConsulta,
+
+                    IdPacienteNavigation = new Paciente
                         {
-                        IdUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
-                        NomeUsuario = c.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                        IdPaciente = c.IdConsultaNavigation.IdPacienteNavigation.IdPaciente,
+                        IdUsuarioNavigation = new Usuario
+                            {
+                            IdUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.IdUsuario,
+                            NomeUsuario = c.IdConsultaNavigation.IdPacienteNavigation.IdUsuarioNavigation.NomeUsuario
+                            }
                         }
-                    },
+                    }
                 }).FirstOrDefault(c => c.IdConsulta == id)!;
+                }
+            catch (Exception)
+                {
+
+                throw;
+                }
             }
 
+        //Retorna o prontuário de uma determinada consulta
         public Prontuario ConsultaProntuario(Guid id)
             {
+            try
+                {
             return ctx.Prontuario.Select(c => new Prontuario
                 {
                 IdProntuario = c.IdProntuario,
                 Descricao = c.Descricao,
                 IdConsulta = c.IdConsulta,
                 }).FirstOrDefault(c => c.IdConsulta == id)!;
+                }
+            catch (Exception)
+                {
+
+                throw;
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ namespace webapi_healthclinic_tarde.Controllers
     [Produces("application/json")]
     public class ClinicaController : ControllerBase
         {
-        private readonly IClinicaRepository _clinicaRepository;
+        private readonly ClinicaRepository _clinicaRepository;
 
         public ClinicaController()
             {
@@ -90,6 +90,20 @@ namespace webapi_healthclinic_tarde.Controllers
                 {
                 _clinicaRepository.Deletar(id);
                 return Ok();
+                }
+            catch (Exception e)
+                {
+
+                return BadRequest(e);
+                }
+            }
+
+        [HttpGet("medicos/{id}")]
+        public IActionResult ClinicaMedicos(Guid id)
+            {
+            try
+                {
+                return Ok(_clinicaRepository.ClinicaMedicos(id));
                 }
             catch (Exception e)
                 {

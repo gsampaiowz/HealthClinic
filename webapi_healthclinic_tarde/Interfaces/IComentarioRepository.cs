@@ -9,6 +9,5 @@ namespace webapi_healthclinic_tarde.Interfaces
         void Cadastrar(Comentario novoComentario);
         void Deletar(Guid id);
         void Atualizar(Guid id, Comentario comentarioAtualizado);
-
         }
     }

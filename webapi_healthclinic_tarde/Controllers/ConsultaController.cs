@@ -12,7 +12,7 @@ namespace webapi_healthclinic_tarde.Controllers
     [Produces("application/json")]
     public class ConsultaController : ControllerBase
         {
-        private readonly IConsultaRepository _consultaRepository;
+        private readonly ConsultaRepository _consultaRepository;
 
         public ConsultaController()
             {
@@ -50,6 +50,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Consulta consulta)
             {
@@ -65,6 +66,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, Consulta consulta)
             {
@@ -81,6 +83,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
             {
@@ -88,6 +91,36 @@ namespace webapi_healthclinic_tarde.Controllers
                 {
                 _consultaRepository.Deletar(id);
                 return Ok();
+                }
+            catch (Exception e)
+                {
+
+                return BadRequest(e);
+                }
+            }
+
+        [Authorize(Roles = "Administrador, Paciente, Médico")]
+        [HttpGet("comentario/{id}")]
+        public IActionResult ConsultaComentario(Guid id)
+            {
+            try
+                {
+                return Ok(_consultaRepository.ConsultaComentario(id));
+                }
+            catch (Exception e)
+                {
+
+                return BadRequest(e);
+                }
+            }
+
+        [Authorize(Roles = "Administrador, Paciente, Médico")]
+        [HttpGet("prontuario/{id}")]
+        public IActionResult ConsultaProntuario(Guid id)
+            {
+            try
+                {
+                return Ok(_consultaRepository.ConsultaProntuario(id));
                 }
             catch (Exception e)
                 {
