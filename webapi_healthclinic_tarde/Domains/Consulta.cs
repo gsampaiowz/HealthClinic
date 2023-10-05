@@ -13,9 +13,9 @@ public partial class Consulta
 
     public Guid IdSituacao { get; set; }
 
-    public DateTime Data { get; set; }
+    public DateOnly Data { get; set; }
 
-    public TimeSpan Horario { get; set; }
+    public TimeOnly Horario { get; set; }
 
     public virtual ICollection<Comentario>? Comentarios { get; set; } = new List<Comentario>();
 

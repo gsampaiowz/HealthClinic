@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using webapi_healthclinic_tarde.Domains;
+using static webapi_healthclinic_tarde.Utils.DateTimeConverterComparer;
 
 namespace webapi_healthclinic_tarde.Contexts;
 
@@ -39,6 +40,8 @@ public partial class HealthClinicContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=NOTE10-S14\\SQLEXPRESS; initial catalog=HealthClinic_Tarde; User Id=sa; Pwd=Senai@134; TrustServerCertificate=true;");
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -89,7 +92,8 @@ public partial class HealthClinicContext : DbContext
             entity.HasKey(e => e.IdConsulta).HasName("PK__Consulta__9B2AD1D8D63B6287");
 
             entity.Property(e => e.IdConsulta).ValueGeneratedNever();
-            entity.Property(e => e.Data).HasColumnType("date");
+            entity.Property(e => e.Data).HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            entity.Property(e => e.Horario).HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
 
             entity.HasOne(d => d.IdMedicoNavigation).WithMany(p => p.Consulta)
                 .HasForeignKey(d => d.IdMedico)
@@ -174,7 +178,7 @@ public partial class HealthClinicContext : DbContext
                 .HasMaxLength(11)
                 .IsUnicode(false)
                 .HasColumnName("CPF");
-            entity.Property(e => e.DataNascimento).HasColumnType("date");
+            entity.Property(e => e.DataNascimento).HasConversion<DateOnlyConverter, DateOnlyComparer>();
             entity.Property(e => e.Endereco)
                 .HasMaxLength(64)
                 .IsUnicode(false);

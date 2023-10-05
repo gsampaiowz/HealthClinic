@@ -98,6 +98,7 @@ namespace webapi_healthclinic_tarde.Controllers
                 }
             }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet("medicos/{id}")]
         public IActionResult ClinicaMedicos(Guid id)
             {
